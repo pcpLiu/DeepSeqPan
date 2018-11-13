@@ -31,6 +31,7 @@ def read_file(testing_file):
         allele peptide
         ....
     ```
+    Only supports 9-length peptides
     """
     samples = []
     with open(testing_file, 'r') as in_file:
