@@ -86,17 +86,31 @@ def train_fold(samples, test_samples, cv_fold, out_file):
     best_model_save_path = os.path.join(BASE_DIR, 'best_model_cv_{}.keras'.format(cv_fold))
 
     model.fit_generator(model.train_generator,
-        epochs=10000,
-        validation_data=model.validate_generator,
-        steps_per_epoch=len(model.train_generator),
-        validation_steps=len(model.validate_generator),
-        verbose=2,
-        callbacks=[
-        ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, cooldown=3, min_lr=0.00001),
-        TensorBoard(log_dir=os.path.join(BASE_DIR, 'logs')),
-        ModelCheckpoint(best_model_save_path, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1),
-        EarlyStopping(monitor='val_loss', patience=15, verbose=1, min_delta=0.001),
-        ])
+                        epochs=1000,
+                        validation_data=model.validate_generator,
+                        steps_per_epoch=len(model.train_generator),
+                        validation_steps=len(model.validate_generator),
+                        callbacks=[
+                            ReduceLROnPlateau(
+                                monitor='val_loss',
+                                factor=0.5,
+                                patience=5,
+                                cooldown=3,
+                                min_lr=0.00001),
+                            TensorBoard(log_dir=os.path.join(BASE_DIR,
+                                                             'logs_MULTI')),
+                            ModelCheckpoint(best_model_save_path,
+                                            monitor='val_loss',
+                                            verbose=1,
+                                            save_best_only=True,
+                                            save_weights_only=False,
+                                            mode='auto',
+                                            period=1),
+                            EarlyStopping(monitor='val_loss',
+                                          patience=15,
+                                          verbose=1,
+                                          min_delta=0.001),
+                        ])
 
     # load best
     model = load_model(best_model_save_path)
@@ -159,7 +173,7 @@ def train_cv():
     out_file = open('cv_result.txt', 'w')
     out_file.write("hla,sequence,real_log,pred_log,pred_binding\n")
     for train, test in kf.split(samples):
-        print("Fold {}", i)
+        print("Fold: ", i)
         train_fold(samples[train], samples[test], i, out_file)
         i += 1
 
