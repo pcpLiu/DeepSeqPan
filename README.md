@@ -1,6 +1,6 @@
 # DeepSeqPan
 
-This the corresponding repository of paper [DeepSeqPan, a sequence-based deep convolutional neural network model for peptide-HLA class I binding affinity prediction](https://www.biorxiv.org/content/early/2018/07/26/299412).
+This the corresponding repository of paper [DeepSeqPan, a novel deep convolutional neural network model for pan-specific class I HLA-peptide binding affinity prediction](https://www.nature.com/articles/s41598-018-37214-1).
 
 ## Structure
 
